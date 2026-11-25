@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>测测你的灵魂是哪位历史人物</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:#e8dfc8;font-family:"STKaiti","KaiTi","Kaiti SC","Songti SC","SimSun",serif;color:#2b2b26}
+.page{max-width:560px;margin:0 auto;background:#f7f2e3;min-height:100vh;box-shadow:0 0 24px rgba(0,0,0,.12);padding:0 20px 32px}
+.topbar{border-top:6px solid #b03a2e;border-bottom:1px solid #d8cdb2;padding:14px 0 10px;text-align:center}
+.topbar .seal{display:inline-block;background:#b03a2e;color:#f7f2e3;font-size:13px;letter-spacing:4px;padding:4px 10px 4px 14px;border-radius:3px;margin-bottom:10px}
+h1{font-size:26px;line-height:1.4;letter-spacing:2px;font-weight:700}
+.subtitle{font-size:14px;color:#7a6f57;margin-top:6px;letter-spacing:1px}
+.divider{text-align:center;color:#b03a2e;letter-spacing:8px;margin:16px 0;font-size:14px}
+.intro{font-size:15px;line-height:1.9;color:#4a4436;text-align:justify}
+.intro p{margin-bottom:10px}
+.facts{display:flex;justify-content:space-between;margin:18px 0;padding:14px 0;border-top:1px solid #d8cdb2;border-bottom:1px solid #d8cdb2;text-align:center}
+.facts div{flex:1}
+.facts .num{font-size:22px;color:#b03a2e;font-weight:700}
+.facts .lbl{font-size:12px;color:#7a6f57;margin-top:2px}
+.btn{display:block;width:100%;padding:14px;font-size:17px;letter-spacing:4px;border:none;border-radius:6px;cursor:pointer;font-family:inherit}
+.btn-primary{background:#b03a2e;color:#f7f2e3}
+.btn-primary:active{background:#962e24}
+.btn-outline{background:transparent;color:#b03a2e;border:1px solid #b03a2e;margin-top:10px}
+.btn-outline:active{background:#f0e2d8}
+.hidden{display:none!important}
+.progress-wrap{margin:18px 0 6px}
+.progress-bar{height:6px;background:#e0d6bd;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:#b03a2e;width:0%;transition:width .3s}
+.progress-text{font-size:13px;color:#7a6f57;text-align:right;margin-top:6px}
+.q-no{color:#b03a2e;font-size:14px;letter-spacing:2px;margin:14px 0 6px}
+.q-text{font-size:19px;line-height:1.7;font-weight:700;margin-bottom:18px}
+.opt{display:block;width:100%;text-align:left;background:#fffdf6;border:1px solid #d8cdb2;border-radius:8px;padding:13px 14px;margin-bottom:10px;font-size:15px;line-height:1.6;color:#2b2b26;cursor:pointer;font-family:inherit}
+.opt:active{border-color:#b03a2e}
+.opt.selected{border-color:#b03a2e;background:#fbeee8;box-shadow:0 0 0 1px #b03a2e inset}
+.opt .tag{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border:1px solid #c9bda0;border-radius:50%;font-size:13px;margin-right:8px;color:#7a6f57;vertical-align:middle}
+.opt.selected .tag{background:#b03a2e;border-color:#b03a2e;color:#fff}
+.back-link{display:block;text-align:center;margin-top:16px;font-size:14px;color:#7a6f57;background:none;border:none;cursor:pointer;font-family:inherit;letter-spacing:2px}
+.back-link:disabled{opacity:.35}
+.result-card{border:2px solid #b03a2e;outline:1px solid #b03a2e;outline-offset:4px;border-radius:4px;padding:22px 16px;margin:18px 0;text-align:center;background:#fffdf6}
+.result-card .r-label{font-size:13px;color:#7a6f57;letter-spacing:4px}
+.result-card .r-name{font-size:32px;font-weight:700;letter-spacing:4px;margin:8px 0;color:#2b2b26}
+.result-card .r-judgment{font-size:16px;color:#b03a2e;line-height:1.6}
+.result-body{font-size:15px;line-height:1.95;color:#4a4436;text-align:justify;margin:16px 0}
+.result-body p{margin-bottom:10px}
+.tip-box{background:#f0e9d6;border-left:4px solid #b08d57;padding:12px 14px;font-size:14px;line-height:1.8;margin:16px 0;text-align:left}
+.tip-box b{color:#b03a2e}
+.dim{margin:18px 0}
+.dim-row{display:flex;align-items:center;margin-bottom:10px;font-size:14px}
+.dim-name{width:52px;text-align:right;margin-right:10px;flex:none}
+.dim-bar{flex:1;height:10px;background:#e0d6bd;border-radius:5px;overflow:hidden}
+.dim-fill{height:100%;background:#3a5a6c;border-radius:5px}
+.dim-val{width:36px;text-align:left;margin-left:8px;color:#7a6f57;flex:none}
+.share-box{background:#fffdf6;border:1px dashed #c9bda0;border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.8;color:#4a4436;margin:16px 0;text-align:left}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#2b2b26;color:#f7f2e3;padding:10px 20px;border-radius:20px;font-size:14px;display:none;z-index:99}
+.footer{margin-top:28px;padding-top:14px;border-top:1px solid #d8cdb2;font-size:12px;line-height:1.8;color:#9a8f78;text-align:center}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="seal">趣味测试</div>
+    <h1>测测你的灵魂<br>是哪位历史人物</h1>
+    <div class="subtitle">四十道题 · 四个维度 · 八位风流人物</div>
+  </div>
+
+  <!-- 开始页 -->
+  <div id="screen-start">
+    <div class="divider">·　·　·</div>
+    <div class="intro">
+      <p>千年风云，人物如星。有人清廉刚正，有人诗酒纵横，有人运筹帷幄，有人扬帆四海。</p>
+      <p>假如灵魂可以穿越，你最像哪一位？这套测试由 40 道原创情景题组成，从抱负、操守、谋略、情怀四个维度，测出与你灵魂最契合的那位历史人物。</p>
+      <p>请凭第一感觉作答，没有标准答案——你的选择，就是你的答案。</p>
+    </div>
+    <div class="facts">
+      <div><div class="num">40</div><div class="lbl">道原创题</div></div>
+      <div><div class="num">4</div><div class="lbl">个评分维度</div></div>
+      <div><div class="num">8</div><div class="lbl">位历史人物</div></div>
+      <div><div class="num">约5分钟</div><div class="lbl">完成时间</div></div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">开始测试</button>
+    <div class="footer">本测试为趣味娱乐，不构成心理评估、诊断或专业建议。</div>
+  </div>
+
+  <!-- 答题页 -->
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+      <div class="progress-text" id="ptext"></div>
+    </div>
+    <div class="q-no" id="qno"></div>
+    <div class="q-text" id="qtext"></div>
+    <div id="opts"></div>
+    <button class="back-link" id="backbtn" onclick="goBack()">← 返回上一题</button>
+  </div>
+
+  <!-- 结果页 -->
+  <div id="screen-result" class="hidden">
+    <div class="divider">·　·　·</div>
+    <div class="result-card">
+      <div class="r-label">你的灵魂是</div>
+      <div class="r-name" id="rname"></div>
+      <div class="r-judgment" id="rjudgment"></div>
+    </div>
+    <div class="result-body" id="rbody"></div>
+    <div class="tip-box" id="rtip"></div>
+    <div class="dim" id="rdims"></div>
+    <div class="share-box" id="rshare"></div>
+    <button class="btn btn-primary" onclick="copyShare()">复制分享文案</button>
+    <button class="btn btn-outline" onclick="restart()">再测一次</button>
+    <div class="footer">本测试为趣味娱乐，不构成心理评估、诊断或专业建议。<br>测测你的灵魂是哪位历史人物</div>
+  </div>
+</div>
+<div class="toast" id="toast">已复制，去分享吧</div>
+
+<script>
+/*__DATA_START__*/
+// 维度：AMB 抱负 / INT 操守 / WIS 谋略 / ROM 情怀
+var DIMS=[
+ {k:"AMB",n:"抱负",d:"进取心与济世之志"},
+ {k:"INT",n:"操守",d:"原则性与清廉之节"},
+ {k:"WIS",n:"谋略",d:"通达务实与谋定而动"},
+ {k:"ROM",n:"情怀",d:"风雅浪漫与诗酒之心"}
+];
+var QUESTIONS=[
+{q:"科举放榜，你高中进士，授官之日最想做的是什么？",o:[{t:"请缨去最难治理的州县，做出一番政绩",d:"AMB"},{t:"先立家规：为官一任，绝不收一文贿赂",d:"INT"},{t:"先去拜访当地耆老，把风土人情摸透再施政",d:"WIS"},{t:"约三五好友登高赋诗，庆祝十年寒窗",d:"ROM"}]},
+{q:"你路过一处荒田，百姓说赋税太重种不下去，你会怎么做？",o:[{t:"上书朝廷，请求减免本县赋税",d:"AMB"},{t:"先查账，看看税银是不是被层层盘剥了",d:"INT"},{t:"和乡绅商量，凑钱买种子帮大家渡过今年",d:"WIS"},{t:"写一首悯农诗，把百姓的苦唱给天下听",d:"ROM"}]},
+{q:"好友邀你一同经商，利润丰厚但要走些灰色门路，你会？",o:[{t:"拒绝，我要走正道建功立业",d:"AMB"},{t:"断然拒绝，还要劝好友收手",d:"INT"},{t:"帮他看看，有没有合法的路子能走通",d:"WIS"},{t:"笑着摇头，约他去江边钓鱼，钱够用就行",d:"ROM"}]},
+{q:"朝廷要派人出使远邦，路途凶险，你的反应是？",o:[{t:"主动请缨，扬国威于四海",d:"AMB"},{t:"去可以，但绝不收受番邦厚礼",d:"INT"},{t:"先研究海图与番邦风俗，备足预案再出发",d:"WIS"},{t:"想想异域的风物与诗篇，心向往之",d:"ROM"}]},
+{q:"你写了一首好诗，朋友说可以献给权贵换个官职，你会？",o:[{t:"献！有了官位才能做更多的事",d:"AMB"},{t:"诗是写给自己的，不换官",d:"INT"},{t:"先打听这位权贵的口碑再定",d:"WIS"},{t:"诗写出来就是为了痛快，换什么都不换",d:"ROM"}]},
+{q:"地方大旱，粮仓见底，灾民围城，你是县令，你会？",o:[{t:"开仓放粮，事后再向朝廷请罪",d:"AMB"},{t:"开仓！哪怕丢官也不能看着百姓饿死",d:"INT"},{t:"一边开仓一边向邻县借粮，同时上书求援",d:"WIS"},{t:"夜里写下赈灾手记，盼此情此景能警醒后人",d:"ROM"}]},
+{q:"你被贬到偏远小县，怎么排解心情？",o:[{t:"偏远更要做出政绩，等朝廷重新起用",d:"AMB"},{t:"身正不怕影子斜，照样清廉为官",d:"INT"},{t:"既来之则安之，先把当地的水利修起来",d:"WIS"},{t:"正好得闲，种菊酿酒，写几篇好文章",d:"ROM"}]},
+{q:"敌军压境，朝廷主和，你主张战还是和？",o:[{t:"主战！不收复失地誓不罢休",d:"AMB"},{t:"和约若是屈辱的，宁死不签",d:"INT"},{t:"先摸清敌军虚实，能战则战，不能战则缓",d:"WIS"},{t:"战与和都由他人定，我只想写下边塞的风沙",d:"ROM"}]},
+{q:"你发现同僚贪墨，证据确凿，你会？",o:[{t:"收集证据，上奏弹劾",d:"AMB"},{t:"当面质问他，绝不同流合污",d:"INT"},{t:"先把证据交给信得过的上司，谋定而动",d:"WIS"},{t:"写一首讽喻诗，暗讽官场贪腐",d:"ROM"}]},
+{q:"皇帝赏你千金，你打算怎么花？",o:[{t:"拿去办义学，培养更多人才",d:"AMB"},{t:"上交国库，我的俸禄够用",d:"INT"},{t:"一半赈济乡里，一半留作应急",d:"WIS"},{t:"买一处山间小院，藏书万卷",d:"ROM"}]},
+{q:"朋友落难向你借钱，你手头也不宽裕，你会？",o:[{t:"借！朋友的难处就是我的事",d:"AMB"},{t:"借多少写多少，亲兄弟明算账",d:"INT"},{t:"先问清他要钱做什么，再决定借多少",d:"WIS"},{t:"钱不多，但可以陪他喝一夜的酒",d:"ROM"}]},
+{q:"有机会拜一位大儒为师，但要放弃现在的官职，你会？",o:[{t:"不放弃，边做官边求学，两不误",d:"AMB"},{t:"学问是根本，官可以不要",d:"INT"},{t:"先请假去听几个月课，看看合不合适",d:"WIS"},{t:"大儒的学问在书里也在山水里，我自去读",d:"ROM"}]},
+{q:"战乱之中，你带着家人逃难，路上遇到受伤的陌生人，你会？",o:[{t:"救！多一个人就多一份力量",d:"AMB"},{t:"救人是本分，不救良心难安",d:"INT"},{t:"先看看伤势，量力而行，别拖垮全家",d:"WIS"},{t:"把他扶到路边，留些干粮，再记下他的名字",d:"ROM"}]},
+{q:"你治理的地方出了一桩大案，牵涉权贵之子，你会？",o:[{t:"依法严办，这是立威的好机会",d:"AMB"},{t:"王子犯法与庶民同罪，绝不徇私",d:"INT"},{t:"证据做实、人证护好，再动手",d:"WIS"},{t:"把案情写成话本，让百姓知道是非",d:"ROM"}]},
+{q:"告老还乡那天，你最希望百姓怎么评价你？",o:[{t:"他是个能干事的好官",d:"AMB"},{t:"他是个清官",d:"INT"},{t:"他是个明白人",d:"WIS"},{t:"他是个有趣的人",d:"ROM"}]},
+{q:"你最喜欢读哪类书？",o:[{t:"兵书与政论",d:"AMB"},{t:"圣贤经典与律法",d:"INT"},{t:"史书与游记",d:"WIS"},{t:"诗词与山水画谱",d:"ROM"}]},
+{q:"朋友请你写序，你发现他的书里有处硬伤，你会？",o:[{t:"直说，帮他改好再出",d:"AMB"},{t:"有错就必须指出，不能睁一只眼闭一只眼",d:"INT"},{t:"私下委婉提醒，保全他的面子",d:"WIS"},{t:"在序里用典故轻轻点一下，懂的人自然懂",d:"ROM"}]},
+{q:"你梦见自己登上高山，醒来最想做的是？",o:[{t:"定个目标，今年一定要干成一件大事",d:"AMB"},{t:"反思自己最近有没有做错什么事",d:"INT"},{t:"查查黄历，看看最近宜不宜远行",d:"WIS"},{t:"把梦写下来，说不定是一首好诗",d:"ROM"}]},
+{q:"乡里要修一座桥，缺钱缺人，你会？",o:[{t:"带头捐钱，再号召大家一起干",d:"AMB"},{t:"账目公开，每一文钱都让乡亲看得见",d:"INT"},{t:"先找木匠算好用料，再分摊到各家",d:"WIS"},{t:"桥修好后写一篇《桥记》，刻在石碑上",d:"ROM"}]},
+{q:"你被误解，流言满天飞，你会？",o:[{t:"用政绩说话，时间会证明一切",d:"AMB"},{t:"清者自清，不屑解释",d:"INT"},{t:"找几个信得过的朋友，把真相传出去",d:"WIS"},{t:"写首诗自嘲，笑一笑就过去了",d:"ROM"}]},
+{q:"假如能选，你最想生活在哪个朝代？",o:[{t:"开疆拓土的汉唐",d:"AMB"},{t:"吏治清明的盛世",d:"INT"},{t:"商业繁华的宋明",d:"WIS"},{t:"山水诗意、文人辈出的魏晋",d:"ROM"}]},
+{q:"你有一坛好酒，会请谁来喝？",o:[{t:"请志同道合的同僚，共商大事",d:"AMB"},{t:"请清廉正直的朋友，对饮清谈",d:"INT"},{t:"请消息灵通的老友，边喝边聊天下事",d:"WIS"},{t:"独酌也好，对月也好，酒逢知己才喝",d:"ROM"}]},
+{q:"官场上有人拉你入伙结党，你会？",o:[{t:"不结党，我只忠于朝廷和百姓",d:"AMB"},{t:"结党营私是祸国之道，坚决不去",d:"INT"},{t:"不得罪也不加入，找个由头推掉",d:"WIS"},{t:"笑着说我只想做个闲人，党争与我无关",d:"ROM"}]},
+{q:"你主持修了一条河，竣工那天你最在意什么？",o:[{t:"灌溉多少亩田、造福多少百姓",d:"AMB"},{t:"工程款有没有一文浪费",d:"INT"},{t:"河道能不能扛住明年的汛期",d:"WIS"},{t:"河边的垂柳和百姓的笑声",d:"ROM"}]},
+{q:"你最欣赏哪种人？",o:[{t:"白手起家、建功立业的人",d:"AMB"},{t:"两袖清风、刚正不阿的人",d:"INT"},{t:"八面玲珑、把难事办成的人",d:"WIS"},{t:"才华横溢、活得潇洒的人",d:"ROM"}]},
+{q:"你遇到一位隐士，他邀你归隐山林，你会？",o:[{t:"谢谢好意，天下未定，我还不能走",d:"AMB"},{t:"山林清静，但我的责任在庙堂",d:"INT"},{t:"先去住几天，看看隐居生活适不适合我",d:"WIS"},{t:"心动了，收拾行李，明天就去",d:"ROM"}]},
+{q:"你的奏折被皇帝留中不发，你会？",o:[{t:"再写一份，言辞更恳切",d:"AMB"},{t:"该说的话我说了，问心无愧",d:"INT"},{t:"打听一下是不是时机不对，换个时机再上",d:"WIS"},{t:"把奏折改成一篇文章，发给文友们看",d:"ROM"}]},
+{q:"你最怕什么？",o:[{t:"一事无成，辜负此生",d:"AMB"},{t:"晚节不保，留下骂名",d:"INT"},{t:"一着不慎，满盘皆输",d:"WIS"},{t:"江郎才尽，再也写不出好东西",d:"ROM"}]},
+{q:"你的家乡遭了水灾，你在千里之外做官，你会？",o:[{t:"立刻上书，请朝廷拨款赈灾",d:"AMB"},{t:"先捐出自己一年的俸禄",d:"INT"},{t:"写信给同乡会商量，组织捐款捐物",d:"WIS"},{t:"写信回家安慰亲人，附上一首诗",d:"ROM"}]},
+{q:"你有一块美玉，有人出高价想买，你会？",o:[{t:"不卖，留着传给子孙做家训的信物",d:"AMB"},{t:"玉象征君子之德，不卖",d:"INT"},{t:"看看价钱，合适就卖，钱可以用来做善事",d:"WIS"},{t:"玉配知音，送给懂它的人",d:"ROM"}]},
+{q:"你最喜欢什么天气？",o:[{t:"晴空万里，适合远行",d:"AMB"},{t:"雨后初晴，天地清明",d:"INT"},{t:"阴晴不定也好，随遇而安",d:"WIS"},{t:"细雨微风，适合读书品茶",d:"ROM"}]},
+{q:"你在书房里最常做的事是？",o:[{t:"复盘白天的公务，写明日计划",d:"AMB"},{t:"抄经静心，反省一日言行",d:"INT"},{t:"看地图和邸报，琢磨天下大势",d:"WIS"},{t:"抚琴作画，写几句闲诗",d:"ROM"}]},
+{q:"有人送你一幅名画，你发现是赝品，你会？",o:[{t:"告诉他真相，免得他再被骗",d:"AMB"},{t:"赝品就是赝品，绝不以假充真",d:"INT"},{t:"先收下，再私下告诉他，别当众揭穿",d:"WIS"},{t:"画得好就行，真假不重要，挂起来欣赏",d:"ROM"}]},
+{q:"你最想给后代留下什么？",o:[{t:"一番功业",d:"AMB"},{t:"一个清名",d:"INT"},{t:"一套处世的智慧",d:"WIS"},{t:"几首好诗、几幅好画",d:"ROM"}]},
+{q:"你路过一座古寺，住持请你题字，你写什么？",o:[{t:"天下为公",d:"AMB"},{t:"清风两袖",d:"INT"},{t:"难得糊涂",d:"WIS"},{t:"明月清风",d:"ROM"}]},
+{q:"你最喜欢哪种花？",o:[{t:"牡丹，花开富贵，气势夺人",d:"AMB"},{t:"梅花，凌寒独自开",d:"INT"},{t:"兰花，幽香不张扬",d:"WIS"},{t:"菊花，采菊东篱下",d:"ROM"}]},
+{q:"你年轻时最大的遗憾是什么？",o:[{t:"没能早点建功立业",d:"AMB"},{t:"曾经有一次没能坚持原则",d:"INT"},{t:"有一次冲动行事，走了弯路",d:"WIS"},{t:"没能多读几年书、多游几处山水",d:"ROM"}]},
+{q:"如果让你选一种兵器，你选？",o:[{t:"长剑，仗剑天涯、建功立业",d:"AMB"},{t:"戒尺，律己律人",d:"INT"},{t:"羽扇，运筹帷幄",d:"WIS"},{t:"玉笛，一曲江湖",d:"ROM"}]},
+{q:"你最想和哪类人做邻居？",o:[{t:"干劲十足的年轻人",d:"AMB"},{t:"正直可靠的老者",d:"INT"},{t:"见多识广的商人",d:"WIS"},{t:"会弹琴作诗的文人",d:"ROM"}]},
+{q:"临终前，你最想说的一句话是？",o:[{t:"此生无悔，功业已成",d:"AMB"},{t:"一生清白，无愧天地",d:"INT"},{t:"顺其自然，儿孙自有儿孙福",d:"WIS"},{t:"此生有诗有酒，足矣",d:"ROM"}]}
+];
+var RESULTS=[
+{name:"庞尚鹏",judgment:"清风两袖，一条鞭法惠万民。",profile:[3,3,2,1],
+ body:"你与明代名臣庞尚鹏灵魂相通。嘉靖年间，他巡按浙江，面对繁杂苛税与地方积弊，没有明哲保身，而是力行一条鞭法，把田赋、徭役并为一体，百姓称便，豪强侧目。你和他一样，眼里容不得沙子，心里装着具体的人。你的正直不是挂在嘴边的口号，而是日复一日、事事较真的坚持：该查的账一笔不落，该得罪的人一个不躲。旁人或许觉得你太较真、太辛苦，可正是这份较真，让你在人群中自带光芒。你的灵魂里，住着一位清官，也住着一位改革者。",
+ tip:"较真之前，先把证据做实；清廉之余，也要学会借力。",
+ share:"我测出灵魂是庞尚鹏——清风两袖，一条鞭法！测测你的灵魂是哪位历史人物？"},
+{name:"诸葛亮",judgment:"鞠躬尽瘁，谋定天下三分。",profile:[3,2,3,1],
+ body:"你与诸葛亮灵魂相通。隆中一对，天下三分；出师一表，鞠躬尽瘁。他不是天生的赢家，却是最可靠的谋臣：大事谋定而后动，小事亲力亲为，从不把责任推给别人。你和他一样，习惯把事情想在前面，把风险算在前面。朋友遇到难处，第一个想到你；团队陷入困局，你总能拿出办法。你的稳重不是木讷，而是胸有成竹；你的操劳不是自苦，而是把承诺看得比什么都重。记住，诸葛亮唯一的遗憾是事必躬亲——学会分担，你才能走得更远。",
+ tip:"大事谋定再动，小事学会分担——事必躬亲，是你唯一的短板。",
+ share:"我测出灵魂是诸葛亮——鞠躬尽瘁，谋定三分！测测你的灵魂是哪位历史人物？"},
+{name:"李白",judgment:"诗酒趁年华，千金散尽还复来。",profile:[2,1,1,3],
+ body:"你与李白灵魂相通。诗仙不是不食人间烟火，而是把人间烟火过成了诗：天子呼来不上船，是他的傲骨；千金散尽还复来，是他的洒脱。你和他一样，骨子里向往自由，讨厌被规矩捆住手脚。你的快乐很简单，一首好诗、一壶好酒、几个知己，就能抵过万户侯。但别忘了，李白也曾仰天大笑出门去，也曾为入仕奔走半生——你的抱负藏在潇洒背后。他的诗写尽了盛唐气象，也写尽了一个人不肯低头的样子。愿你既有举杯邀明月的浪漫，也有直挂云帆济沧海的勇气。",
+ tip:"洒脱是你的天赋，但记得把才华落到一件具体的事上。",
+ share:"我测出灵魂是李白——诗酒趁年华！测测你的灵魂是哪位历史人物？"},
+{name:"苏轼",judgment:"一蓑烟雨任平生，此心安处是吾乡。",profile:[2,2,3,3],
+ body:"你与苏轼灵魂相通。乌台诗案、黄州贬谪，都没能压垮他；一蓑烟雨任平生，是他给人生的答案。你和他一样，有一种难得的钝感力：事情搞砸了，先吃一碗东坡肉再说；被人误解了，写首词笑一笑就过去了。你的豁达不是没心没肺，而是见过风浪之后的选择——既然改变不了风的方向，那就调整自己的帆。他走到哪里，就把哪里过成诗：黄州有东坡肉，惠州有荔枝，海南有桄榔庵。工作、生活、感情，你都能找到属于自己的节奏。记住苏轼的活法：此心安处是吾乡。",
+ tip:"豁达是你的铠甲，但别用玩笑掩盖真正想说的话。",
+ share:"我测出灵魂是苏轼——一蓑烟雨任平生！测测你的灵魂是哪位历史人物？"},
+{name:"王阳明",judgment:"知行合一，此心光明。",profile:[2,3,3,2],
+ body:"你与王阳明灵魂相通。龙场悟道之前，他也曾迷茫、被贬、九死一生；悟道之后，他提出了知行合一——真正的学问，不在书本里，而在事上磨。你和他一样，不满足于空谈道理，更看重做出来。你的内心有一杆秤：对的事，哪怕没人喝彩也要做；错的事，哪怕人人都在做也要停。你的定力来自向内求，而不是向外比。阳明先生说此心光明，亦复何言。他一生三立：立德、立功、立言，文人能做到的极致，他都做到了。愿你的心，也能亮成一盏灯。",
+ tip:"向内求答案，向外做实事；心安了，路就顺了。",
+ share:"我测出灵魂是王阳明——知行合一，此心光明！测测你的灵魂是哪位历史人物？"},
+{name:"岳飞",judgment:"精忠报国，还我河山。",profile:[3,3,1,2],
+ body:"你与岳飞灵魂相通。精忠报国四个字，岳母刺在他的背上，也刻进了他的骨子里。还我河山，是他至死未改的誓言；冻死不拆屋，饿死不掳掠，是他带兵的铁律。你和他一样，心里有一条绝不退让的底线：国家、家人、承诺，这些词在你这里不是空话，而是刻进日常的选择。你的刚直可能会让你吃亏，你的认真可能会让你辛苦，但请记住——正是这样的人，才让这个世界值得信任。满江红里的怒发冲冠，是他留给后世最滚烫的诗句。你的灵魂里，住着一位将军。",
+ tip:"底线要守住，但也要给自己留一条回家的路。",
+ share:"我测出灵魂是岳飞——精忠报国！测测你的灵魂是哪位历史人物？"},
+{name:"李清照",judgment:"才情冠绝古今，柔肩亦担家国。",profile:[1,2,1,3],
+ body:"你与李清照灵魂相通。少女时的她，争渡，争渡，惊起一滩鸥鹭；历经国破家亡后，她写下生当作人杰，死亦为鬼雄。她的词婉约，她的骨却比谁都硬。她晚年整理金石录，颠沛流离中仍不忘保存文化火种。你和他一样，外表温婉，内心有山：对美的事物极度敏感，对不公的事绝不低头。你重情，也重义；你感性，但关键时刻比谁都清醒。别人只看到你的细腻，只有你自己知道，这份细腻背后是千锤百炼的坚韧。愿你如易安居士，才情与风骨兼得。",
+ tip:"细腻是你的天赋，坚韧是你的底气——两者都是你。",
+ share:"我测出灵魂是李清照——才情风骨兼得！测测你的灵魂是哪位历史人物？"},
+{name:"郑和",judgment:"扬帆四海，七下西洋。",profile:[3,1,3,2],
+ body:"你与郑和灵魂相通。七下西洋，二十八年间，他带着船队到达过三十多个国家和地区，带去的是瓷器、丝绸与和平，带回的是见识与友谊。他的船队最远到达过非洲东海岸，比哥伦布早了八十多年。你和他一样，天生向往远方：未知不是恐惧，而是邀请；出发不是冲动，而是蓄谋已久的计划。你的视野比身边人宽一寸，你的好奇心比别人多三分。别人安于一隅，你却总想看看地平线那头还有什么。愿你如郑和一般，扬帆时有勇气，归来时有故事。",
+ tip:"出发前备好航线，归来时记得分享见闻。",
+ share:"我测出灵魂是郑和——扬帆四海！测测你的灵魂是哪位历史人物？"}
+];
+/*__DATA_END__*/
+
+// ---- 答题逻辑 ----
+var current=0, answers=[], shuffled=[], lock=false, resultIdx=-1;
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function startQuiz(){
+  shuffled=QUESTIONS.map(function(q){return shuffle(q.o);});
+  answers=new Array(QUESTIONS.length); current=0; resultIdx=-1;
+  document.getElementById("screen-start").classList.add("hidden");
+  document.getElementById("screen-result").classList.add("hidden");
+  document.getElementById("screen-quiz").classList.remove("hidden");
+  renderQ(); window.scrollTo(0,0);
+}
+function renderQ(){
+  lock=false;
+  var q=QUESTIONS[current], opts=shuffled[current];
+  document.getElementById("pfill").style.width=((current/QUESTIONS.length)*100)+"%";
+  document.getElementById("ptext").textContent="第 "+(current+1)+" / "+QUESTIONS.length+" 题";
+  document.getElementById("qno").textContent="第 "+(current+1)+" 题";
+  document.getElementById("qtext").textContent=q.q;
+  document.getElementById("backbtn").disabled=(current===0);
+  var box=document.getElementById("opts"); box.innerHTML="";
+  var tags=["甲","乙","丙","丁"];
+  for(var i=0;i<opts.length;i++){
+    (function(i){
+      var b=document.createElement("button");
+      b.className="opt"+(answers[current]===opts[i].d?" selected":"");
+      b.innerHTML='<span class="tag">'+tags[i]+'</span>'+opts[i].t;
+      b.onclick=function(){selectOpt(i);};
+      box.appendChild(b);
+    })(i);
+  }
+}
+function selectOpt(i){
+  if(lock) return; lock=true;
+  answers[current]=shuffled[current][i].d;
+  var btns=document.getElementById("opts").children;
+  for(var k=0;k<btns.length;k++) btns[k].classList.remove("selected");
+  btns[i].classList.add("selected");
+  document.getElementById("pfill").style.width=(((current+1)/QUESTIONS.length)*100)+"%";
+  setTimeout(function(){
+    if(current<QUESTIONS.length-1){current++; renderQ(); window.scrollTo(0,0);}
+    else{showResult();}
+  },350);
+}
+function goBack(){
+  if(current>0){current--; renderQ(); window.scrollTo(0,0);}
+}
+function computeResult(){
+  var scores={AMB:0,INT:0,WIS:0,ROM:0};
+  for(var i=0;i<answers.length;i++){ if(scores[answers[i]]!==undefined) scores[answers[i]]+=2; }
+  var keys=["AMB","INT","WIS","ROM"], best=-1, bestScore=-1;
+  for(var r=0;r<RESULTS.length;r++){
+    var p=RESULTS[r].profile, sum=p[0]+p[1]+p[2]+p[3], s=0;
+    for(var d=0;d<4;d++){ s+=scores[keys[d]]*(p[d]/sum); }
+    if(s>bestScore){bestScore=s; best=r;}
+  }
+  return {idx:best, scores:scores};
+}
+function showResult(){
+  var res=computeResult(); resultIdx=res.idx;
+  var r=RESULTS[res.idx];
+  document.getElementById("screen-quiz").classList.add("hidden");
+  document.getElementById("screen-result").classList.remove("hidden");
+  document.getElementById("rname").textContent=r.name;
+  document.getElementById("rjudgment").textContent="“"+r.judgment+"”";
+  document.getElementById("rbody").innerHTML="<p>"+r.body+"</p>";
+  document.getElementById("rtip").innerHTML="<b>人生锦囊：</b>"+r.tip;
+  document.getElementById("rshare").innerHTML="<b>分享文案：</b>"+r.share;
+  var keys=["AMB","INT","WIS","ROM"], html="";
+  for(var i=0;i<4;i++){
+    var v=res.scores[keys[i]], pct=Math.round(v/(QUESTIONS.length*2)*100);
+    html+='<div class="dim-row"><div class="dim-name">'+DIMS[i].n+'</div><div class="dim-bar"><div class="dim-fill" style="width:'+pct+'%"></div></div><div class="dim-val">'+v+'分</div></div>';
+  }
+  document.getElementById("rdims").innerHTML=html;
+  window.scrollTo(0,0);
+}
+function copyShare(){
+  var text=RESULTS[resultIdx].share;
+  function done(){var t=document.getElementById("toast");t.style.display="block";setTimeout(function(){t.style.display="none";},2000);}
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(function(){fallback();});
+  } else { fallback(); }
+  function fallback(){
+    var ta=document.createElement("textarea");
+    ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");}catch(e){}
+    document.body.removeChild(ta); done();
+  }
+}
+function restart(){
+  document.getElementById("screen-result").classList.add("hidden");
+  document.getElementById("screen-start").classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
